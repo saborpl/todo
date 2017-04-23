@@ -1,5 +1,5 @@
 # Todo App
-Sample Todo App
+Sample Todo App. Simply run TodoLiost.exe from TodoListBinary.zip or compile project on MS Visual Studio 2012 or earlier.
 
 ## Technology
 * MS Visual Studio 2012
