@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Recipe2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Recipes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Descpription" Type="nvarchar" MaxLength="255" />
+          <Property Name="TodoDate" Type="datetime" />
+        </EntityType>
+        <Function Name="DeleteTodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertTodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar" Mode="In" />
+          <Parameter Name="TodoDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="SelectTodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TodoDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="UpdateTodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar" Mode="In" />
+          <Parameter Name="TodoDate" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="Recipe2ModelStoreContainer">
+          <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Recipe2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Descpription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TodoDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="Recipe2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+          <FunctionImport Name="DeleteTodo">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertTodo">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="TodoDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SelectTodo" ReturnType="Collection(Recipe2Model.SelectTodo_Result)">
+          <Parameter Name="TodoDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateTodo">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Description" Mode="In" Type="String" />
+            <Parameter Name="TodoDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SelectTodo_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Descpription" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="TodoDate" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Recipe2ModelStoreContainer" CdmEntityContainer="Recipe2Entities">
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="Recipe2Model.Recipe">
+              <MappingFragment StoreEntitySet="Recipes">
+                <ScalarProperty Name="TodoDate" ColumnName="TodoDate" />
+                <ScalarProperty Name="Descpription" ColumnName="Descpription" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="Recipe2Model.Recipe">
+              <ModificationFunctionMapping>
+                <InsertFunction FunctionName="Recipe2Model.Store.InsertTodo">
+                  <ScalarProperty Name="Descpription" ParameterName="Description" />
+                  <ScalarProperty Name="TodoDate" ParameterName="TodoDate" />
+                  <ScalarProperty Name="Name" ParameterName="Name" />
+                </InsertFunction>
+                <UpdateFunction FunctionName="Recipe2Model.Store.UpdateTodo">
+                  <ScalarProperty Name="Descpription" ParameterName="Description" Version="Current" />
+                  <ScalarProperty Name="Id" ParameterName="ID" Version="Original" />
+                  <ScalarProperty Name="TodoDate" ParameterName="TodoDate" Version="Current" />
+                  <ScalarProperty Name="Name" ParameterName="Name" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="Recipe2Model.Store.DeleteTodo" >
+                  <ScalarProperty Name="Id" ParameterName="ID" />
+                </DeleteFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteTodo" FunctionName="Recipe2Model.Store.DeleteTodo" />
+          <FunctionImportMapping FunctionImportName="InsertTodo" FunctionName="Recipe2Model.Store.InsertTodo" />
+          <FunctionImportMapping FunctionImportName="SelectTodo" FunctionName="Recipe2Model.Store.SelectTodo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Recipe2Model.SelectTodo_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Descpription" ColumnName="Descpription" />
+                <ScalarProperty Name="TodoDate" ColumnName="TodoDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateTodo" FunctionName="Recipe2Model.Store.UpdateTodo" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
