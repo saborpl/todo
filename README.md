@@ -19,6 +19,6 @@ Sample Todo App
 ## Trouble
 Database file TodoList.mdf is in v11 SQL Express Version. If You don't have a server with this version, please create database from script TodoList.sql on Your database server
 
-## License
-
-TODO: Write license
+## Autor
+Robert Luczynski
+* [LinkedIn](https://www.linkedin.com/in/robertluczynski/) - LinkedIn profile
